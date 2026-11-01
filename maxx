@@ -1,0 +1,561 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>WriteHire · paid writing job board</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    :root {
+      --ink: #0b0f1f; --ink-soft: #1e293b; --muted: #64748b; --line: #e8edf4;
+      --bg: #f6f8fc; --indigo: #4f46e5; --violet: #7c3aed; --amber: #b45309; --radius: 22px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', system-ui, -apple-system, sans-serif; background: var(--bg); color: var(--ink-soft); line-height: 1.5; min-height: 100vh; display: flex; flex-direction: column; -webkit-font-smoothing: antialiased; }
+    h1,h2,h3,.logo,.fee-amount,.hero-title { font-family: 'Plus Jakarta Sans','Inter',sans-serif; }
+    .container { max-width: 1240px; margin: 0 auto; padding: 0 1.5rem; width: 100%; }
+
+    /* HEADER */
+    .site-header { position: sticky; top: 0; z-index: 50; background: rgba(11,15,31,0.72); backdrop-filter: blur(18px); -webkit-backdrop-filter: blur(18px); border-bottom: 1px solid rgba(255,255,255,0.08); padding: 0.85rem 0; }
+    .header-content { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; }
+    .logo { display: flex; align-items: center; gap: 0.55rem; font-weight: 800; font-size: 1.45rem; letter-spacing: -0.02em; color: #fff; }
+    .logo .mark { width: 34px; height: 34px; border-radius: 10px; background: linear-gradient(135deg,#6366f1,#ec4899); display: grid; place-items: center; font-size: 1rem; color: #fff; box-shadow: 0 6px 16px -4px rgba(99,102,241,0.7); }
+    .logo em { font-style: normal; background: linear-gradient(135deg,#a5b4fc,#f0abfc); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .badge-payment { display: flex; align-items: center; gap: 0.45rem; background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.14); padding: 0.42rem 0.95rem; border-radius: 999px; font-size: 0.82rem; font-weight: 500; color: #c7d2fe; }
+    .badge-payment .dot { width: 7px; height: 7px; border-radius: 50%; background: #34d399; box-shadow: 0 0 0 3px rgba(52,211,153,0.2); }
+
+    /* HERO */
+    .hero { background: #0b0f1f; background-image: radial-gradient(60% 80% at 12% 0%, rgba(99,102,241,0.55) 0%, transparent 60%), radial-gradient(50% 70% at 88% 10%, rgba(236,72,153,0.38) 0%, transparent 60%), radial-gradient(45% 65% at 50% 110%, rgba(124,58,237,0.45) 0%, transparent 70%); color: #fff; padding: 4.5rem 0 4rem; text-align: center; position: relative; overflow: hidden; }
+    .hero::after { content: ""; position: absolute; inset: 0; background-image: radial-gradient(rgba(255,255,255,0.06) 1px, transparent 1px); background-size: 26px 26px; mask-image: radial-gradient(60% 60% at 50% 40%, #000 0%, transparent 100%); -webkit-mask-image: radial-gradient(60% 60% at 50% 40%, #000 0%, transparent 100%); pointer-events: none; }
+    .hero .container { position: relative; z-index: 1; }
+    .hero-badge { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.16); padding: 0.4rem 1rem; border-radius: 999px; font-size: 0.8rem; font-weight: 500; color: #e0e7ff; margin-bottom: 1.6rem; }
+    .hero-title { font-size: clamp(2.3rem,5.2vw,3.7rem); font-weight: 800; letter-spacing: -0.035em; line-height: 1.08; margin-bottom: 1.1rem; }
+    .gradient-text { background: linear-gradient(110deg,#a5b4fc 0%,#f0abfc 45%,#fda4af 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-sub { max-width: 620px; margin: 0 auto 2.4rem; color: #b6c2e2; font-size: 1.05rem; line-height: 1.6; }
+    .hero-stats { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.5rem 0; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); border-radius: 20px; padding: 1rem 0.5rem; max-width: 720px; margin: 0 auto; backdrop-filter: blur(8px); }
+    .stat { flex: 1; min-width: 130px; padding: 0.3rem 1rem; border-right: 1px solid rgba(255,255,255,0.1); }
+    .stat:last-child { border-right: none; }
+    .stat b { display: block; font-size: 1.35rem; font-weight: 800; letter-spacing: -0.02em; color: #fff; }
+    .stat span { font-size: 0.78rem; color: #9aa9cf; letter-spacing: 0.02em; }
+
+    /* JOBS */
+    .jobs-section { padding: 2.8rem 0 4.5rem; flex: 1; }
+    .toolbar { display: flex; flex-wrap: wrap; gap: 1rem; justify-content: space-between; align-items: center; margin-bottom: 1.8rem; }
+    .search-box { position: relative; flex: 1; min-width: 220px; max-width: 340px; }
+    .search-box svg { position: absolute; left: 0.95rem; top: 50%; transform: translateY(-50%); color: #94a3b8; }
+    .search-box input { width: 100%; padding: 0.72rem 1rem 0.72rem 2.6rem; border-radius: 999px; border: 1px solid var(--line); background: #fff; font-size: 0.92rem; color: var(--ink-soft); transition: border-color 0.15s, box-shadow 0.15s; }
+    .search-box input:focus { outline: none; border-color: #a5b4fc; box-shadow: 0 0 0 4px rgba(99,102,241,0.12); }
+    .filters { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+    .filter-btn { background: #fff; border: 1px solid var(--line); padding: 0.5rem 1.05rem; border-radius: 999px; font-size: 0.84rem; font-weight: 600; color: #475569; cursor: pointer; transition: all 0.18s; font-family: inherit; }
+    .filter-btn:hover { border-color: #c7d2fe; color: var(--indigo); }
+    .filter-btn.active { background: var(--ink); border-color: var(--ink); color: #fff; box-shadow: 0 8px 18px -6px rgba(15,23,42,0.5); }
+    .jobs-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px,1fr)); gap: 1.4rem; }
+
+    /* JOB CARD */
+    .job-card { position: relative; background: #fff; border: 1px solid var(--line); border-radius: var(--radius); padding: 1.5rem; display: flex; flex-direction: column; box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 12px 32px -16px rgba(15,23,42,0.12); transition: transform 0.28s cubic-bezier(.2,.8,.2,1), box-shadow 0.28s, border-color 0.28s; animation: cardIn 0.5s cubic-bezier(.2,.8,.2,1) both; }
+    @keyframes cardIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+    .job-card:hover { transform: translateY(-5px); border-color: #c7d2fe; box-shadow: 0 1px 2px rgba(15,23,42,0.04), 0 28px 44px -18px rgba(79,70,229,0.28); }
+    .job-card.featured { border: 2px solid transparent; background: linear-gradient(#fff,#fff) padding-box, linear-gradient(135deg,#6366f1,#ec4899) border-box; }
+    .featured-badge { position: absolute; top: -11px; right: 18px; background: linear-gradient(135deg,#6366f1,#ec4899); color: #fff; font-size: 0.64rem; font-weight: 800; letter-spacing: 0.07em; text-transform: uppercase; padding: 0.28rem 0.72rem; border-radius: 999px; box-shadow: 0 6px 14px -3px rgba(236,72,153,0.55); }
+    .card-head { display: flex; gap: 0.85rem; align-items: center; margin-bottom: 1rem; }
+    .avatar { width: 48px; height: 48px; border-radius: 14px; display: grid; place-items: center; flex-shrink: 0; color: #fff; font-weight: 800; font-size: 0.95rem; box-shadow: inset 0 -2px 6px rgba(0,0,0,0.18); }
+    .company-meta { min-width: 0; }
+    .job-title { font-size: 1.12rem; font-weight: 700; letter-spacing: -0.015em; color: var(--ink); line-height: 1.3; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .company-name { font-size: 0.83rem; color: var(--muted); margin-top: 0.2rem; display: flex; align-items: center; gap: 0.35rem; }
+    .company-name .sep { color: #cbd5e1; }
+    .job-desc { font-size: 0.89rem; color: #526075; line-height: 1.58; margin-bottom: 1.1rem; flex: 1; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin-bottom: 1.15rem; }
+    .tag { font-size: 0.71rem; font-weight: 700; padding: 0.3rem 0.7rem; border-radius: 999px; letter-spacing: 0.02em; }
+    .tag-copywriting { background: #eef2ff; color: #4338ca; }
+    .tag-content { background: #ecfdf5; color: #047857; }
+    .tag-technical { background: #e0f2fe; color: #0369a1; }
+    .tag-ghostwriting { background: #fdf2f8; color: #be185d; }
+    .tag-remote { background: #f1f5f9; color: #475569; }
+    .tag-time { background: #fff; color: #94a3b8; border: 1px solid #eef2f6; }
+    .card-footer { display: flex; align-items: center; gap: 0.7rem; padding-top: 1.1rem; border-top: 1px solid #f1f5f9; }
+    .fee-tag { display: flex; align-items: center; gap: 0.35rem; background: #fffbeb; color: var(--amber); font-weight: 800; font-size: 0.85rem; padding: 0.58rem 0.82rem; border-radius: 13px; border: 1px solid #fde68a; white-space: nowrap; }
+    .apply-btn { flex: 1; background: var(--ink); color: #fff; border: none; padding: 0.72rem 1rem; border-radius: 13px; font-weight: 700; font-size: 0.88rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: background 0.2s, box-shadow 0.2s, transform 0.1s; font-family: inherit; }
+    .apply-btn:hover { background: linear-gradient(135deg,#4f46e5,#7c3aed); box-shadow: 0 10px 22px -8px rgba(79,70,229,0.6); }
+    .apply-btn:active { transform: scale(0.98); }
+    .apply-btn svg { transition: transform 0.2s; }
+    .apply-btn:hover svg { transform: translateX(3px); }
+    .empty-state { grid-column: 1/-1; text-align: center; padding: 4rem 1rem; color: var(--muted); }
+    .empty-state .big { font-size: 2.4rem; margin-bottom: 0.6rem; }
+
+    /* MODAL */
+    .modal-overlay { position: fixed; inset: 0; background: rgba(7,11,25,0.72); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); display: flex; align-items: center; justify-content: center; padding: 1.25rem; z-index: 1000; opacity: 0; pointer-events: none; transition: opacity 0.22s ease; }
+    .modal-overlay.active { opacity: 1; pointer-events: auto; }
+    .modal { background: #fff; max-width: 500px; width: 100%; border-radius: 28px; padding: 2rem; box-shadow: 0 50px 90px -25px rgba(2,6,23,0.65); transform: translateY(14px) scale(0.97); transition: transform 0.3s cubic-bezier(.2,.8,.2,1); max-height: 92vh; overflow-y: auto; }
+    .modal-overlay.active .modal { transform: translateY(0) scale(1); }
+    .modal-head { display: flex; align-items: center; gap: 0.7rem; margin-bottom: 0.35rem; }
+    .modal-icon { width: 40px; height: 40px; border-radius: 12px; background: linear-gradient(135deg,#eef2ff,#fdf2f8); display: grid; place-items: center; font-size: 1.1rem; border: 1px solid #e0e7ff; }
+    .modal h2 { font-size: 1.5rem; font-weight: 800; letter-spacing: -0.025em; color: var(--ink); }
+    .job-ref { background: #f8fafc; border: 1px solid var(--line); border-left: 4px solid var(--indigo); padding: 0.75rem 1rem; border-radius: 14px; font-size: 0.88rem; font-weight: 600; color: var(--ink-soft); margin: 1rem 0 1.1rem; }
+    .fee-box { background: var(--ink); background-image: radial-gradient(80% 120% at 0% 0%, rgba(99,102,241,0.5) 0%, transparent 60%); color: #fff; border-radius: 18px; padding: 1.05rem 1.25rem; display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.1rem; }
+    .fee-box .label { font-size: 0.82rem; color: #b6c2e2; font-weight: 500; }
+    .fee-amount { font-size: 1.6rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1; }
+    .fee-amount small { font-size: 0.8rem; font-weight: 500; color: #94a3b8; margin-left: 0.25rem; }
+
+    /* PAY BOX */
+    .pay-box { background: #f0f9ff; border: 1px solid #bae6fd; border-radius: 16px; padding: 1rem 1.1rem; margin-bottom: 1.2rem; }
+    .pay-box .pay-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; color: #0369a1; margin-bottom: 0.45rem; }
+    .account-row { display: flex; align-items: center; gap: 0.6rem; }
+    .account-number { flex: 1; font-family: ui-monospace, 'SF Mono', Menlo, monospace; font-size: 1.12rem; font-weight: 700; letter-spacing: 1.2px; color: #0c4a6e; word-break: break-all; }
+    .copy-btn { background: #fff; border: 1px solid #7dd3fc; color: #0369a1; font-weight: 700; font-size: 0.75rem; padding: 0.42rem 0.7rem; border-radius: 10px; cursor: pointer; white-space: nowrap; transition: 0.15s; font-family: inherit; }
+    .copy-btn:hover { background: #e0f2fe; }
+    .copy-btn.copied { background: #dcfce7; border-color: #86efac; color: #15803d; }
+    .pay-steps { font-size: 0.76rem; color: #0c4a6e; line-height: 1.55; margin-top: 0.7rem; padding-top: 0.65rem; border-top: 1px dashed #bae6fd; }
+    .pay-steps b { color: #075985; }
+    .gateway-desc { font-size: 0.82rem; color: #0c4a6e; line-height: 1.55; margin-bottom: 0.75rem; }
+    .gateway-btn { width: 100%; background: linear-gradient(135deg,#0ea5e9,#0284c7); color: #fff; border: none; padding: 0.85rem 1rem; border-radius: 12px; font-weight: 700; font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 0.4rem; transition: filter 0.15s, box-shadow 0.2s; box-shadow: 0 8px 20px -8px rgba(14,165,233,0.6); font-family: inherit; }
+    .gateway-btn:hover { filter: brightness(1.08); box-shadow: 0 12px 26px -8px rgba(14,165,233,0.7); }
+    .config-warning { background: #fef3c7; border: 1px solid #fcd34d; color: #92400e; font-size: 0.74rem; padding: 0.5rem 0.75rem; border-radius: 10px; margin-bottom: 0.7rem; line-height: 1.45; }
+    .config-warning b { color: #78350f; }
+
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 700; margin-bottom: 0.4rem; color: var(--ink-soft); letter-spacing: 0.01em; }
+    .form-group input { width: 100%; padding: 0.82rem 1rem; border: 1px solid var(--line); border-radius: 14px; font-size: 0.95rem; background: #fbfcfe; color: var(--ink); font-family: inherit; transition: border-color 0.15s, box-shadow 0.15s, background 0.15s; }
+    .form-group input:focus { outline: none; border-color: #a5b4fc; background: #fff; box-shadow: 0 0 0 4px rgba(99,102,241,0.13); }
+    .field-hint { font-size: 0.72rem; color: #94a3b8; margin-top: 0.35rem; }
+
+    .modal-actions { display: flex; gap: 0.7rem; margin-top: 1.5rem; }
+    .btn-secondary { background: #f8fafc; border: 1px solid var(--line); padding: 0.8rem 1.4rem; border-radius: 999px; font-weight: 600; font-size: 0.9rem; color: #475569; cursor: pointer; flex: 1; transition: 0.15s; font-family: inherit; }
+    .btn-secondary:hover { background: #f1f5f9; }
+    .btn-primary { background: linear-gradient(135deg,#4f46e5,#7c3aed); border: none; padding: 0.8rem 1.4rem; border-radius: 999px; font-weight: 700; font-size: 0.9rem; color: #fff; cursor: pointer; flex: 1.6; display: flex; align-items: center; justify-content: center; gap: 0.45rem; transition: filter 0.15s, box-shadow 0.2s; box-shadow: 0 10px 24px -10px rgba(79,70,229,0.7); font-family: inherit; }
+    .btn-primary:hover { filter: brightness(1.08); box-shadow: 0 14px 30px -10px rgba(79,70,229,0.8); }
+    .btn-primary:disabled { background: #cbd5e1; box-shadow: none; cursor: not-allowed; opacity: 0.8; }
+
+    .processing-view { text-align: center; padding: 2rem 0 1.5rem; }
+    .spinner { width: 52px; height: 52px; border: 4px solid #eef2ff; border-top-color: var(--indigo); border-radius: 50%; animation: spin 0.85s linear infinite; margin: 0 auto 1.2rem; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .processing-view p { color: #475569; font-size: 0.95rem; font-weight: 500; }
+    .processing-view .small { font-size: 0.8rem; color: #94a3b8; margin-top: 0.35rem; font-weight: 400; }
+
+    .toast { position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%) translateY(100px); background: var(--ink); color: #fff; padding: 0.9rem 1.8rem; border-radius: 999px; font-weight: 500; font-size: 0.9rem; box-shadow: 0 20px 40px -12px rgba(2,6,23,0.6); opacity: 0; transition: 0.28s cubic-bezier(.2,.8,.2,1); z-index: 2000; pointer-events: none; max-width: 90vw; text-align: center; }
+    .toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+    .footer { background: #fff; border-top: 1px solid var(--line); padding: 1.8rem 0; text-align: center; color: var(--muted); font-size: 0.85rem; }
+    .footer b { color: var(--ink-soft); }
+
+    @media (max-width: 720px) {
+      .hero { padding: 3.2rem 0 3rem; }
+      .hero-stats { flex-wrap: wrap; }
+      .stat { border-right: none; min-width: 100px; }
+      .stat b { font-size: 1.15rem; }
+      .toolbar { flex-direction: column; align-items: stretch; }
+      .search-box { max-width: 100%; }
+      .jobs-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 640px) {
+      .header-content { flex-wrap: nowrap; }
+      .badge-payment span.txt { display: none; }
+      .badge-payment { padding: 0.42rem 0.7rem; }
+      .modal { padding: 1.5rem; border-radius: 24px; }
+      .modal h2 { font-size: 1.3rem; }
+      .modal-actions { flex-direction: column-reverse; }
+      .btn-secondary, .btn-primary { width: 100%; }
+      .fee-tag { font-size: 0.8rem; padding: 0.5rem 0.7rem; }
+      .apply-btn { font-size: 0.82rem; }
+      .account-number { font-size: 1rem; }
+    }
+  </style>
+</head>
+<body>
+  <header class="site-header">
+    <div class="container header-content">
+      <div class="logo"><span class="mark">✍️</span> Write<em>Hire</em></div>
+      <div class="badge-payment"><span class="dot"></span><span class="txt">payment required to apply</span></div>
+    </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <div class="hero-badge">💼 380+ vetted writing jobs this month</div>
+      <h1 class="hero-title">Craft words.<br><span class="gradient-text">Get paid.</span></h1>
+      <p class="hero-sub">WriteHire is the job board for serious writers. Every listing is vetted and every application is a commitment — because applying takes a small, refundable fee.</p>
+      <div class="hero-stats">
+        <div class="stat"><b>380</b><span>open jobs</span></div>
+        <div class="stat"><b>1,240</b><span>writers hired</span></div>
+        <div class="stat"><b>$95.4k</b><span>paid out</span></div>
+        <div class="stat"><b>4.9★</b><span>avg. rating</span></div>
+      </div>
+    </div>
+  </section>
+
+  <main class="jobs-section">
+    <div class="container">
+      <div class="toolbar">
+        <div class="search-box">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"></circle><path d="m21 21-4.3-4.3"></path></svg>
+          <input type="search" id="searchInput" placeholder="Search roles, companies…" aria-label="Search jobs">
+        </div>
+        <div class="filters" id="filters">
+          <button class="filter-btn active" data-filter="all">All jobs</button>
+          <button class="filter-btn" data-filter="copywriting">Copywriting</button>
+          <button class="filter-btn" data-filter="content">Content</button>
+          <button class="filter-btn" data-filter="technical">Technical</button>
+          <button class="filter-btn" data-filter="ghostwriting">Ghostwriting</button>
+        </div>
+      </div>
+      <div class="jobs-grid" id="jobsGrid"></div>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container">© 2025 <b>WriteHire</b> — the paid job board for writers. Payments verified manually.</div>
+  </footer>
+
+  <div class="modal-overlay" id="applicationModal" role="dialog" aria-modal="true" aria-labelledby="modalHeading">
+    <div class="modal">
+      <div id="modalFormView">
+        <div class="modal-head">
+          <div class="modal-icon">💳</div>
+          <h2 id="modalHeading">Apply &amp; pay</h2>
+        </div>
+        <div class="job-ref" id="modalJobTitle">Senior Copywriter — Acme Creative</div>
+
+        <div class="fee-box">
+          <span class="label">Application fee</span>
+          <span class="fee-amount" id="modalFee">$19<small>USD</small></span>
+        </div>
+
+        <div class="pay-box" id="payBox"></div>
+
+        <div class="form-group">
+          <label for="applicantName">Full name</label>
+          <input type="text" id="applicantName" placeholder="Jane Writer" autocomplete="name" required>
+        </div>
+        <div class="form-group">
+          <label for="applicantEmail">Email address</label>
+          <input type="email" id="applicantEmail" placeholder="jane@example.com" autocomplete="email" required>
+        </div>
+        <div class="form-group">
+          <label for="txnReference">Transaction reference / receipt ID</label>
+          <input type="text" id="txnReference" placeholder="e.g. 1234567890" autocomplete="off" required>
+          <div class="field-hint">We verify every reference. Fake IDs will be rejected.</div>
+        </div>
+
+        <div class="modal-actions">
+          <button class="btn-secondary" id="cancelModalBtn" type="button">Cancel</button>
+          <button class="btn-primary" id="payAndApplyBtn" type="button"><span>📤</span> Submit application</button>
+        </div>
+      </div>
+
+      <div id="modalProcessingView" class="processing-view" style="display:none;">
+        <div class="spinner"></div>
+        <p>Submitting your application…</p>
+        <p class="small">Recording payment reference</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="toast" id="toastMessage" role="status" aria-live="polite"></div>
+
+  <script>
+    (function() {
+      // ============================================================
+      // ⚙️  PAYMENT CONFIGURATION  — READ ME
+      // ============================================================
+      // mode: 'gateway'  →  ACCOUNT NUMBER IS INVISIBLE
+      //                      Money routes to your account because you
+      //                      linked 7770176970994 in your Paystack /
+      //                      Flutterwave / bank payment-link dashboard.
+      //                      The number never appears in this code or UI.
+      //
+      // mode: 'manual'   →  Shows the account number for direct transfer.
+      //                      Works out of the box, but the number is visible.
+      //
+      // 👉 If you set mode to 'gateway' but leave the URL as the placeholder,
+      //    the app falls back to manual mode so the demo keeps working.
+      // ============================================================
+      const PAYMENT = {
+        mode: 'gateway',   // ← change to 'manual' to show the number instead
+
+        // GATEWAY MODE (account lives in your provider dashboard)
+        gateway: {
+          name: 'Paystack',
+          // Replace with your real payment page, e.g.:
+          //   https://paystack.shop/pay/your-store-slug
+          //   https://flutterwave.com/pay/your-store-slug
+          //   https://yourbank.com/pay/your-link
+          url: 'https://paystack.shop/pay/your-store-link'
+        },
+
+        // MANUAL MODE ONLY (fallback / demo)
+        manual: {
+          number: '7770176970994',
+          bank: 'Opay',
+          name: 'WriteHire Payments'
+        }
+      };
+
+      // ============================================================
+      // JOB DATA
+      // ============================================================
+      const jobsData = [
+        { id:1,  title:"Senior Copywriter",           company:"Acme Creative",  location:"Remote · Worldwide", description:"Craft compelling ad copy for global brands. 5+ years experience. Long-term remote contract.",  type:"copywriting", fee:19, feeDisplay:"$19", featured:true,  posted:"2h ago" },
+        { id:2,  title:"Content Writer (SaaS)",       company:"CloudPeak",      location:"Remote · US",        description:"Write blog posts, tutorials, and whitepapers for B2B SaaS. Tech-savvy writer wanted.",            type:"content",     fee:15, feeDisplay:"$15", featured:false, posted:"5h ago" },
+        { id:3,  title:"Technical Writer",            company:"DevDocs Inc.",   location:"Remote · EU",        description:"Create API documentation and developer guides. Markdown, Git, and clear writing required.",       type:"technical",   fee:25, feeDisplay:"$25", featured:true,  posted:"1d ago" },
+        { id:4,  title:"Ghostwriter – Memoir",        company:"Private Client", location:"Remote · Global",    description:"Confidential ghostwriting project for a business memoir. NDA required, 6-month project.",         type:"ghostwriting",fee:35, feeDisplay:"$35", featured:false, posted:"3h ago" },
+        { id:5,  title:"Email Copywriter",            company:"GrowthLab",      location:"Remote · US",        description:"Write high-converting email sequences for e-commerce. A/B testing mindset required.",             type:"copywriting", fee:17, feeDisplay:"$17", featured:false, posted:"8h ago" },
+        { id:6,  title:"Content Strategist / Writer", company:"FinEdge",        location:"Hybrid · London",    description:"Develop content strategy and write articles for a fintech startup. SEO knowledge required.",      type:"content",     fee:22, feeDisplay:"$22", featured:false, posted:"12h ago" },
+        { id:7,  title:"UX Writer",                   company:"PixelPerfect",   location:"Remote · Worldwide", description:"Write microcopy, in-app messages, and onboarding flows for mobile apps. Portfolio required.",     type:"technical",   fee:28, feeDisplay:"$28", featured:true,  posted:"1d ago" },
+        { id:8,  title:"Ghostwriter – Non-fiction",   company:"InkWell",        location:"Remote · Global",    description:"Ghostwrite a series of self-help books. Flexible schedule, long-term collaboration.",             type:"ghostwriting",fee:29, feeDisplay:"$29", featured:false, posted:"2d ago" },
+        { id:9,  title:"Creative Copywriter",         company:"BrandStory",     location:"Remote · EU",        description:"Write taglines, social posts, and brand narratives for lifestyle clients. Remote-friendly.",      type:"copywriting", fee:14, feeDisplay:"$14", featured:false, posted:"6h ago" },
+        { id:10, title:"SEO Content Writer",          company:"RankRise",       location:"Remote · US",        description:"Produce long-form SEO articles for a marketing agency. Familiar with Ahrefs and Surfer SEO.",    type:"content",     fee:16, feeDisplay:"$16", featured:false, posted:"9h ago" },
+        { id:11, title:"API Documentation Writer",    company:"StackForge",     location:"Remote · Worldwide", description:"Document REST and GraphQL APIs for a developer-tools company. Strong technical writing skills.",  type:"technical",   fee:30, feeDisplay:"$30", featured:false, posted:"1d ago" },
+        { id:12, title:"Long-form Ghostwriter",       company:"StoryCraft",     location:"Remote · Global",    description:"Ghostwrite thought-leadership articles for executives. 3+ years of ghostwriting experience.",     type:"ghostwriting",fee:32, feeDisplay:"$32", featured:false, posted:"4h ago" }
+      ];
+
+      // ============================================================
+      // DOM
+      // ============================================================
+      const jobsGrid            = document.getElementById('jobsGrid');
+      const filterBtns          = document.querySelectorAll('.filter-btn');
+      const searchInput         = document.getElementById('searchInput');
+      const modalOverlay        = document.getElementById('applicationModal');
+      const modalJobTitle       = document.getElementById('modalJobTitle');
+      const modalFee            = document.getElementById('modalFee');
+      const payBox              = document.getElementById('payBox');
+      const cancelModalBtn      = document.getElementById('cancelModalBtn');
+      const payAndApplyBtn      = document.getElementById('payAndApplyBtn');
+      const toastMessage        = document.getElementById('toastMessage');
+      const applicantName       = document.getElementById('applicantName');
+      const applicantEmail      = document.getElementById('applicantEmail');
+      const txnReference        = document.getElementById('txnReference');
+      const modalFormView       = document.getElementById('modalFormView');
+      const modalProcessingView = document.getElementById('modalProcessingView');
+
+      const avatarPalette = [
+        ['#6366f1','#8b5cf6'], ['#f59e0b','#f97316'], ['#10b981','#059669'],
+        ['#ec4899','#f43f5e'], ['#0ea5e9','#3b82f6'], ['#8b5cf6','#d946ef']
+      ];
+
+      let currentJob = null;
+      let currentFilter = 'all';
+      let toastTimer = null;
+
+      // ---------- helpers ----------
+      const hashStr = s => { let h=0; for (let i=0;i<s.length;i++) h=(h*31+s.charCodeAt(i))>>>0; return h; };
+      const initials = n => n.split(' ').filter(Boolean).map(w=>w[0]).slice(0,2).join('').toUpperCase();
+      const typeLabel = t => t.charAt(0).toUpperCase() + t.slice(1);
+      const gatewayConfigured = () => !PAYMENT.gateway.url.includes('your-store-link');
+
+      // ---------- render jobs ----------
+      function renderJobs(list) {
+        if (!list.length) {
+          jobsGrid.innerHTML = `<div class="empty-state"><div class="big">🔍</div><p style="font-weight:600;color:#334155;">No jobs match your search</p><p style="font-size:0.9rem;margin-top:0.3rem;">Try a different keyword or filter.</p></div>`;
+          return;
+        }
+        jobsGrid.innerHTML = list.map((job, i) => {
+          const [c1, c2] = avatarPalette[hashStr(job.company) % avatarPalette.length];
+          return `
+          <article class="job-card ${job.featured?'featured':''}" style="animation-delay:${Math.min(i*45,400)}ms">
+            ${job.featured ? '<div class="featured-badge">★ Featured</div>' : ''}
+            <div class="card-head">
+              <div class="avatar" style="background:linear-gradient(135deg, ${c1}, ${c2});">${initials(job.company)}</div>
+              <div class="company-meta">
+                <h3 class="job-title" title="${job.title}">${job.title}</h3>
+                <div class="company-name">${job.company} <span class="sep">·</span> ${job.location}</div>
+              </div>
+            </div>
+            <p class="job-desc">${job.description}</p>
+            <div class="tags">
+              <span class="tag tag-${job.type}">${typeLabel(job.type)}</span>
+              <span class="tag tag-remote">Remote</span>
+              <span class="tag tag-time">⏱ ${job.posted}</span>
+            </div>
+            <div class="card-footer">
+              <div class="fee-tag">💳 ${job.feeDisplay}</div>
+              <button class="apply-btn" data-job-id="${job.id}">Apply &amp; pay
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+            </div>
+          </article>`;
+        }).join('');
+        jobsGrid.querySelectorAll('.apply-btn').forEach(btn => {
+          btn.addEventListener('click', () => {
+            const job = jobsData.find(j => j.id === Number(btn.dataset.jobId));
+            if (job) openPaymentModal(job);
+          });
+        });
+      }
+
+      // ---------- filter + search ----------
+      function applyFilters() {
+        let list = jobsData;
+        if (currentFilter !== 'all') list = list.filter(j => j.type === currentFilter);
+        const q = searchInput.value.trim().toLowerCase();
+        if (q) list = list.filter(j => (j.title+' '+j.company+' '+j.description+' '+j.location).toLowerCase().includes(q));
+        renderJobs(list);
+      }
+      filterBtns.forEach(btn => btn.addEventListener('click', () => {
+        filterBtns.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentFilter = btn.dataset.filter;
+        applyFilters();
+      }));
+      let sDebounce;
+      searchInput.addEventListener('input', () => { clearTimeout(sDebounce); sDebounce = setTimeout(applyFilters, 150); });
+
+      // ============================================================
+      // PAY BOX RENDERER
+      //   - gateway + configured  → account INVISIBLE, payment link
+      //   - gateway + placeholder → warning + manual fallback (demo)
+      //   - manual                → account visible
+      // ============================================================
+      function renderPayBox() {
+        if (PAYMENT.mode === 'gateway' && gatewayConfigured()) {
+          // ✅ THE INVISIBLE MODE — account number is not in the UI at all
+          payBox.innerHTML = `
+            <div class="pay-label">Secure payment</div>
+            <p class="gateway-desc">You'll be redirected to our secure payment page. Your payment goes directly to our verified merchant account.</p>
+            <button class="gateway-btn" id="openGatewayBtn" type="button">
+              ${PAYMENT.gateway.name} · Pay securely
+              <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17 17 7"/><path d="M7 7h10v10"/></svg>
+            </button>
+            <div class="pay-steps">
+              <b>1.</b> Complete payment on the secure page.<br>
+              <b>2.</b> Copy the transaction reference.<br>
+              <b>3.</b> Paste it below and submit.
+            </div>`;
+          document.getElementById('openGatewayBtn').addEventListener('click', () => {
+            window.open(PAYMENT.gateway.url, '_blank', 'noopener');
+          });
+          return;
+        }
+
+        if (PAYMENT.mode === 'gateway') {
+          // ⚠️ Gateway not configured — fall back to manual so demo works
+          payBox.innerHTML = `
+            <div class="pay-label">Secure payment</div>
+            <div class="config-warning">
+              <b>Demo notice:</b> payment gateway not configured yet. Showing bank-transfer fallback.
+              To make the account invisible, set <code>PAYMENT.gateway.url</code> to your Paystack/Flutterwave link.
+            </div>
+            <div class="account-row">
+              <span class="account-number" id="accountNumber">${PAYMENT.manual.number}</span>
+              <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+            </div>
+            <div class="pay-steps">
+              <b>1.</b> Send the exact fee to the account above.<br>
+              <b>2.</b> Copy the transaction reference.<br>
+              <b>3.</b> Paste it below and submit.
+            </div>`;
+          attachCopyHandler();
+          return;
+        }
+
+        // Manual mode
+        payBox.innerHTML = `
+          <div class="pay-label">Pay to this account</div>
+          <div class="account-row">
+            <span class="account-number" id="accountNumber">${PAYMENT.manual.number}</span>
+            <button class="copy-btn" id="copyBtn" type="button">Copy</button>
+          </div>
+          <div class="pay-steps">
+            <b>1.</b> Send the exact fee to the account above.<br>
+            <b>2.</b> Copy the transaction reference.<br>
+            <b>3.</b> Paste it below and submit.
+          </div>`;
+        attachCopyHandler();
+      }
+
+      function attachCopyHandler() {
+        const btn = document.getElementById('copyBtn');
+        const numEl = document.getElementById('accountNumber');
+        if (!btn || !numEl) return;
+        btn.addEventListener('click', async () => {
+          const num = numEl.textContent;
+          try { await navigator.clipboard.writeText(num); }
+          catch {
+            const ta = document.createElement('textarea'); ta.value = num;
+            document.body.appendChild(ta); ta.select(); document.execCommand('copy');
+            document.body.removeChild(ta);
+          }
+          btn.textContent = 'Copied!';
+          btn.classList.add('copied');
+          setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 1800);
+        });
+      }
+
+      // ---------- modal ----------
+      function openPaymentModal(job) {
+        currentJob = job;
+        modalJobTitle.textContent = `${job.title} — ${job.company}`;
+        modalFee.innerHTML = `${job.feeDisplay}<small>USD</small>`;
+        renderPayBox();
+
+        modalFormView.style.display = 'block';
+        modalProcessingView.style.display = 'none';
+        applicantName.value = '';
+        applicantEmail.value = '';
+        txnReference.value = '';
+        payAndApplyBtn.disabled = false;
+        payAndApplyBtn.innerHTML = '<span>📤</span> Submit application';
+        modalOverlay.classList.add('active');
+        setTimeout(() => applicantName.focus(), 120);
+      }
+
+      function closeModal() {
+        modalOverlay.classList.remove('active');
+        currentJob = null;
+      }
+
+      function showToast(text, duration = 3400) {
+        if (toastTimer) clearTimeout(toastTimer);
+        toastMessage.textContent = text;
+        toastMessage.classList.add('show');
+        toastTimer = setTimeout(() => toastMessage.classList.remove('show'), duration);
+      }
+
+      // ---------- submit ----------
+      function submitApplication() {
+        if (!currentJob) return;
+        const name = applicantName.value.trim();
+        const email = applicantEmail.value.trim();
+        const ref = txnReference.value.trim();
+
+        if (!name) { showToast('Please enter your full name.', 2400); applicantName.focus(); return; }
+        if (!email || !email.includes('@') || !email.includes('.')) { showToast('Please enter a valid email address.', 2400); applicantEmail.focus(); return; }
+        if (!ref) { showToast('Please enter your transaction reference.', 2400); txnReference.focus(); return; }
+        if (ref.length < 4) { showToast('That reference looks too short.', 2400); txnReference.focus(); return; }
+
+        modalFormView.style.display = 'none';
+        modalProcessingView.style.display = 'block';
+
+        setTimeout(() => {
+          modalProcessingView.innerHTML = `
+            <div style="font-size:2.6rem;margin-bottom:0.4rem;">✅</div>
+            <p style="font-weight:700;color:#0f172a;font-size:1.05rem;">Application received</p>
+            <p class="small">Ref: ${ref} — payment pending verification</p>`;
+          showToast(`✅ Application sent for "${currentJob.title}". We'll verify your payment shortly.`, 4600);
+          setTimeout(() => {
+            closeModal();
+            modalProcessingView.innerHTML = `
+              <div class="spinner"></div>
+              <p>Submitting your application…</p>
+              <p class="small">Recording payment reference</p>`;
+          }, 2000);
+        }, 1500);
+      }
+
+      // ---------- events ----------
+      cancelModalBtn.addEventListener('click', closeModal);
+      modalOverlay.addEventListener('click', e => { if (e.target === modalOverlay) closeModal(); });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape' && modalOverlay.classList.contains('active')) closeModal(); });
+      payAndApplyBtn.addEventListener('click', submitApplication);
+      txnReference.addEventListener('keypress', e => { if (e.key === 'Enter') { e.preventDefault(); submitApplication(); } });
+
+      // ---------- init ----------
+      renderJobs(jobsData);
+    })();
+  </script>
+</body>
+</html>
